@@ -11,10 +11,11 @@ $register_ids(LevelSettingsLayer) {
 		1. Start Pos menu, which has fewer buttons and labels because you can't set colors or music.
 		2. Level settings from the Editor UI button, which has song selection too.
 	*/
-	bool isStartPos = m_mainLayer->getChildrenCount() < 15;  // Startpos has 13, level settings normally has 22
+	// Common elements with the same indexes
+	m_mainLayer->getChildByType<CCScale9Sprite>(0)->setID("background");
 
+	bool isStartPos = m_mainLayer->getChildrenCount() < 15;  // Startpos has 13, level settings has 22 by default
 	if (isStartPos) {
-		m_mainLayer->getChildByType<CCScale9Sprite>(0)->setID("background");
 		m_mainLayer->getChildByType<CCScale9Sprite>(1)->setID("order-background");
 		m_mainLayer->getChildByType<CCScale9Sprite>(2)->setID("channel-background");
 
@@ -22,6 +23,7 @@ $register_ids(LevelSettingsLayer) {
 		m_mainLayer->getChildByType<CCLabelBMFont>(1)->setID("reset-camera-label");
 		m_mainLayer->getChildByType<CCLabelBMFont>(2)->setID("target-order-label");
 		m_mainLayer->getChildByType<CCLabelBMFont>(3)->setID("target-channel-label");
+
 		m_mainLayer->getChildByType<CCLabelBMFont>(4)->setID("speed-label");
 		m_mainLayer->getChildByType<CCLabelBMFont>(5)->setID("mode-label");
 		m_mainLayer->getChildByType<CCLabelBMFont>(6)->setID("options-label");
@@ -30,9 +32,10 @@ $register_ids(LevelSettingsLayer) {
 		m_mainLayer->getChildByType<CCTextInputNode>(1)->setID("channel-input");
 
 		if (auto menu = m_mainLayer->getChildByType<CCMenu>(0)) {
-			menu->setID("menu");
+			menu->setID("main-menu");
 
-			menu->getChildByType<CCMenuItemSpriteExtra>(0)->setID("back-button");
+			menu->getChildByType<CCMenuItemSpriteExtra>(0)->setID("ok-button");
+
 			menu->getChildByType<CCMenuItemSpriteExtra>(1)->setID("speed-button");
 			menu->getChildByType<CCMenuItemSpriteExtra>(2)->setID("mode-button");
 			menu->getChildByType<CCMenuItemSpriteExtra>(3)->setID("options-button");
@@ -42,7 +45,6 @@ $register_ids(LevelSettingsLayer) {
 		}
 	}
 	else {
-		m_mainLayer->getChildByType<CCScale9Sprite>(0)->setID("background");
 		m_mainLayer->getChildByType<CCScale9Sprite>(1)->setID("song-background");
 
 		m_mainLayer->getChildByType<CCLabelBMFont>(0)->setID("select-color-label");
@@ -53,18 +55,22 @@ $register_ids(LevelSettingsLayer) {
 		m_mainLayer->getChildByType<CCLabelBMFont>(5)->setID("mg-color-label");
 		m_mainLayer->getChildByType<CCLabelBMFont>(6)->setID("mg2-color-label");
 		m_mainLayer->getChildByType<CCLabelBMFont>(7)->setID("more-color-label");
-		m_mainLayer->getChildByType<CCLabelBMFont>(8)->setID("game-type-label");  // Be careful! This one is called here despite future ordering
+
+		m_mainLayer->getChildByType<CCLabelBMFont>(8)->setID("game-type-label");  // Only one that doesn't follow the order after z ordering
+
 		m_mainLayer->getChildByType<CCLabelBMFont>(9)->setID("bg-label");
 		m_mainLayer->getChildByType<CCLabelBMFont>(10)->setID("g-label");
 		m_mainLayer->getChildByType<CCLabelBMFont>(11)->setID("mg-label");
+
 		m_mainLayer->getChildByType<CCLabelBMFont>(12)->setID("select-song-label");
 		m_mainLayer->getChildByType<CCLabelBMFont>(13)->setID("song-label");
+
 		m_mainLayer->getChildByType<CCLabelBMFont>(14)->setID("speed-label");
 		m_mainLayer->getChildByType<CCLabelBMFont>(15)->setID("mode-label");
 		m_mainLayer->getChildByType<CCLabelBMFont>(16)->setID("options-label");
 
 		if (auto menu = m_mainLayer->getChildByType<CCMenu>(0)) {
-			menu->setID("menu");
+			menu->setID("main-menu");
 
 			menu->getChildByType<CCMenuItemSpriteExtra>(0)->setID("bg-color-button");
 			menu->getChildByType<CCMenuItemSpriteExtra>(1)->setID("g-color-button");
@@ -74,12 +80,12 @@ $register_ids(LevelSettingsLayer) {
 			menu->getChildByType<CCMenuItemSpriteExtra>(5)->setID("mg2-color-button");
 			menu->getChildByType<CCMenuItemSpriteExtra>(6)->setID("more-color-button");
 
-			menu->getChildByType<CCMenuItemSpriteExtra>(7)->setID("bg-color-select-button");
-			menu->getChildByType<CCMenuItemSpriteExtra>(8)->setID("g-color-select-button");
-			menu->getChildByType<CCMenuItemSpriteExtra>(9)->setID("g2-color-select-button");
-			menu->getChildByType<CCMenuItemSpriteExtra>(10)->setID("line-color-select-button");
-			menu->getChildByType<CCMenuItemSpriteExtra>(11)->setID("mg-color-select-button");
-			menu->getChildByType<CCMenuItemSpriteExtra>(12)->setID("mg2-color-select-button");
+			menu->getChildByType<CCMenuItemSpriteExtra>(7)->setID("bg-color-quick-edit-button");
+			menu->getChildByType<CCMenuItemSpriteExtra>(8)->setID("g-color-quick-edit-button");
+			menu->getChildByType<CCMenuItemSpriteExtra>(9)->setID("g2-color-quick-edit-button");
+			menu->getChildByType<CCMenuItemSpriteExtra>(10)->setID("line-color-quick-edit-button");
+			menu->getChildByType<CCMenuItemSpriteExtra>(11)->setID("mg-color-quick-edit-button");
+			menu->getChildByType<CCMenuItemSpriteExtra>(12)->setID("mg2-color-quick-edit-button");
 
 			menu->getChildByType<CCMenuItemSpriteExtra>(13)->setID("classic-button");
 			menu->getChildByType<CCMenuItemSpriteExtra>(14)->setID("platformer-button");
@@ -89,9 +95,9 @@ $register_ids(LevelSettingsLayer) {
 			menu->getChildByType<CCMenuItemSpriteExtra>(17)->setID("mg-button");
 			menu->getChildByType<CCMenuItemSpriteExtra>(18)->setID("font-button");
 
-			menu->getChildByType<CCMenuItemSpriteExtra>(19)->setID("back-button");
+			menu->getChildByType<CCMenuItemSpriteExtra>(19)->setID("ok-button");
 
-			menu->getChildByType<CCMenuItemSpriteExtra>(20)->setID("previous-song-button");
+			menu->getChildByType<CCMenuItemSpriteExtra>(20)->setID("prev-song-button");
 			menu->getChildByType<CCMenuItemSpriteExtra>(21)->setID("next-song-button");
 			menu->getChildByType<CCMenuItemSpriteExtra>(22)->setID("normal-song-button");
 			menu->getChildByType<CCMenuItemSpriteExtra>(23)->setID("custom-song-button");
